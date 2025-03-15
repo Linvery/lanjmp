@@ -30,6 +30,11 @@ async function handleRequest(request) {
 
     // 主页面
     if (url.pathname === '/' || url.pathname === '/index.html') {
+        const userId = "oyama"
+        return handleRedirect(request, userId, pathParts)
+    }
+
+    if (url.pathname === '/index1' || url.pathname === '/index.html') {
         return new Response(getIndex(), {
             headers: { 'Content-Type': 'text/html;charset=utf-8' }
         })
