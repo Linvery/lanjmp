@@ -6,6 +6,6 @@ compatibility_date = "2024-11-11"
 enabled = true
 
 [[kv_namespaces]]
-binding = "nas-link"
-id = "d5f4221fa4474ff983538d3e2f806fc5"
+binding = "NAS_LINK"
+id = "23ec2086598144479d96a94ac65a4665"
 
