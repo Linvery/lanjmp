@@ -61,7 +61,7 @@ async function handleRequest(request) {
 }
 
 async function handleRedirect(request, userId, pathParts) {
-    const data = await nas-link.get(userId, { type: 'json' })
+    const data = await NAS_LINK.get(userId, { type: 'json' })
     if (!data) return new Response('用户不存在', { status: 404 })
 
     // 检查是否需要密码验证
@@ -99,7 +99,7 @@ async function handleVerify(request) {
         return new Response('参数不完整', { status: 400 })
     }
 
-    const data = await nas-link.get(userId, { type: 'json' })
+    const data = await NAS_LINK.get(userId, { type: 'json' })
     if (!data) return new Response('用户不存在', { status: 404 })
 
     if (data.accessKey !== accessKey) {
@@ -129,15 +129,15 @@ async function handleUpdate(request) {
     }
 
     const { userId, password, https, ip, port, accessKey } = params
-    const data = await nas-link.get(userId, { type: 'json' })
+    const data = await NAS_LINK.get(userId, { type: 'json' })
 
     if (!data) return new Response('用户不存在', { status: 404 })
     if (data.password !== password) return new Response('未认证', { status: 401 })
 
     try {
-        await nas-link.put(userId, JSON.stringify({ password, https, ip, port, accessKey }))
+        await NAS_LINK.put(userId, JSON.stringify({ password, https, ip, port, accessKey }))
         // 验证更新是否成功
-        const updatedData = await nas-link.get(userId, { type: 'json' })
+        const updatedData = await NAS_LINK.get(userId, { type: 'json' })
         if (!updatedData) {
             return new Response('更新失败，请重试', { status: 500 })
         }
@@ -166,11 +166,11 @@ async function handleCreate(request) {
         return new Response('用户名不可用', { status: 400 })
     }
     
-    const exists = await nas-link.get(userId)
+    const exists = await NAS_LINK.get(userId)
 
     if (exists) return new Response('用户已存在', { status: 409 })
 
-    await nas-link.put(userId, JSON.stringify({ password, https, ip, port, accessKey }))
+    await NAS_LINK.put(userId, JSON.stringify({ password, https, ip, port, accessKey }))
     return new Response('注册成功', { status: 201 })
 }
 
